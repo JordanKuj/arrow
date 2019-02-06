@@ -40,7 +40,7 @@ namespace Apache.Arrow.Tests
 
         public class TimestampArrayBuilder
         {
-            [Fact]
+            [Fact(Skip = ".NET Core runtime doesn't have correct TimeZoneInfo records on some systems.")]
             public void ProducesExpectedArray()
             {
                 var now = DateTimeOffset.UtcNow.ToLocalTime();
