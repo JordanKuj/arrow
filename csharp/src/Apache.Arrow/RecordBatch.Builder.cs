@@ -31,6 +31,7 @@ namespace Apache.Arrow
                 _memoryPool = memoryPool;
             }
 
+            public BooleanArray Boolean(Action<BooleanArray.Builder> action) => Build<BooleanArray, BooleanArray.Builder>(action);
             public Int8Array Int8(Action<Int8Array.Builder> action) => Build<Int8Array, Int8Array.Builder>(action);
             public Int16Array Int16(Action<Int16Array.Builder> action) => Build<Int16Array, Int16Array.Builder>(action);
             public Int32Array Int32(Action<Int32Array.Builder> action) => Build<Int32Array, Int32Array.Builder>(action);

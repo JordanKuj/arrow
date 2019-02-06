@@ -107,6 +107,12 @@ namespace Apache.Arrow.Ipc
                 _buffers.Add(CreateBuffer(array.ValueBuffer));
             }
 
+            private void CreateBuffers(BooleanArray array)
+            {
+                _buffers.Add(CreateBuffer(ArrowBuffer.Empty));
+                _buffers.Add(CreateBuffer(array.ValueBuffer));
+            }
+
             private void CreateBuffers<T>(PrimitiveArray<T> array)
                 where T: struct
             {
