@@ -13,34 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Apache.Arrow.Types;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Apache.Arrow
+namespace Apache.Arrow.Tests
 {
-    public class BooleanArray: PrimitiveArray<byte>
+    public static class DateTimeOffsetExtensions
     {
-        
-        public BooleanArray(
-            ArrowBuffer valueBuffer, ArrowBuffer nullBitmapBuffer,
-            int length, int nullCount, int offset)
-            : this(new ArrayData(BooleanType.Default, length, nullCount, offset,
-                new[] { nullBitmapBuffer, valueBuffer }))
-        { }
-
-        public BooleanArray(ArrayData data) 
-            : base(data)
+        public static DateTimeOffset Truncate(this DateTimeOffset dateTimeOffset, TimeSpan offset)
         {
-            data.EnsureDataType(ArrowTypeId.Boolean);
+            if (offset == TimeSpan.Zero)
+            {
+                return dateTimeOffset;
+            }
+
+            if (dateTimeOffset == DateTimeOffset.MinValue || dateTimeOffset == DateTimeOffset.MaxValue)
+            {
+                return dateTimeOffset;
+            }
+
+            return dateTimeOffset.AddTicks(-(dateTimeOffset.Ticks % offset.Ticks));
         }
-
-        public override void Accept(IArrowArrayVisitor visitor) => Accept(this, visitor);
-
-        public bool? GetBoolean(int index)
-        {
-            if (IsNull(index))
-                return null;
-
-            return BitUtility.GetBit(Values, index);
-        }
+            
     }
 }
